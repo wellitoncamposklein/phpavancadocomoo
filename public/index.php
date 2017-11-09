@@ -6,12 +6,14 @@ use Pimple\Container;
 
 $container = new Container();
 
-$container['date'] = $container->factory(function (){
-    return new \DateTime();
-});
+$container['conn'] = function (){
+    return new \Source\Conn("mysql:host=localhost;dbname=test_oo","root","123mudar");
+};
 
-var_dump($container['date']);
+$container['product'] = function ($c){
+    return new \Source\Product($c['conn']);
+};
 
-echo "<br/>";
-sleep(2);
-var_dump($container['date']);
+$list = $container['product']->list();
+
+var_dump($list);
