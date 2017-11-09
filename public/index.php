@@ -1,18 +1,8 @@
 <?php
 
 require_once "../vendor/autoload.php";
-
-use Pimple\Container;
-
-$container = new Container();
-
-$container['conn'] = function (){
-    return new \Source\Conn("mysql:host=localhost;dbname=test_oo","root","123mudar");
-};
-
-$container['product'] = function ($c){
-    return new \Source\Product($c['conn']);
-};
+require_once "config.php";
+require_once "service.php";
 
 $list = $container['product']->list();
 
